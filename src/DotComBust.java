@@ -29,6 +29,7 @@ public class DotComBust
         System.out.println("Each DotCom has 3 spaces");
         System.out.println("Example: User Type a0 or b4 or g7 ");
         System.out.println("It will be a Hit or Miss. Good Luck!!!");
+        //System.out.println("   0 1 2 3 4 5 6 \n a - - - - - - - \n b - - - - - - - \n c - - - - - - - \n d - - - - - - - \n e - - - - - - - \n f - - - - - - - \n g - - - - - - - ");
 
         //Repeat with Each DotCom in the list
         for(DotCom dotComToSet : dotComsList)
@@ -47,6 +48,7 @@ public class DotComBust
 
         while(!dotComsList.isEmpty())
         {
+            System.out.println("   0 1 2 3 4 5 6 \n a - - - - - - - \n b - - - - - - - \n c - - - - - - - \n d - - - - - - - \n e - - - - - - - \n f - - - - - - - \n g - - - - - - - ");
             String userGuess = helper.getUserInput("Enter a guess");
             // Get User input
             checkUserGuess(userGuess);

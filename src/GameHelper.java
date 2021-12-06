@@ -77,9 +77,12 @@ public class GameHelper
 
             alphaCells.add(temp.concat(Integer.toString(row)));
             x++;
-            //String.out.print("  coord " + x + " = " + alphaCells.get(x-1));
+            //System.out.print("  coord " + x + " = " + alphaCells.get(x-1));
+            //This Tells you the exact location of each Battleship(dotCom)
         }
         //System.out.println("\n");
+
+        //make a function that prints out the grind as just the grid.
 
         return alphaCells;
     }
