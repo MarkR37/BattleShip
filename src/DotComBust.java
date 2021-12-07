@@ -19,17 +19,18 @@ public class DotComBust
         dotComsList.add(three);
         //Made 3 DotCom Objects, gave them names and added them to the ArrayList
 
+
         //Give Instructions to the User
-        System.out.println("Your Goal is to sink three dot com ships.");
+        System.out.println("Your goal is to take down three websites.");
         System.out.println("Pets.com, WaffleKings.com, Follow.com");
-        System.out.println("Try to sink them with the least number of guesses");
+        System.out.println("Try to take them down with the least number of guesses");
         System.out.println("Note: This is a 7x7 grid so you need to use ");
         System.out.println("Letters: abcdefg ");
         System.out.println("Numbers: 0123456 ");
         System.out.println("Each DotCom has 3 spaces");
         System.out.println("Example: User Type a0 or b4 or g7 ");
         System.out.println("It will be a Hit or Miss. Good Luck!!!");
-        //System.out.println("   0 1 2 3 4 5 6 \n a - - - - - - - \n b - - - - - - - \n c - - - - - - - \n d - - - - - - - \n e - - - - - - - \n f - - - - - - - \n g - - - - - - - ");
+
 
         //Repeat with Each DotCom in the list
         for(DotCom dotComToSet : dotComsList)
@@ -42,28 +43,51 @@ public class DotComBust
 
 
     }
+    private void grid(){
+
+        helper.gridBoard();
+
+    }
 
     private void startPlaying()
     {
 
+
+
         while(!dotComsList.isEmpty())
         {
-            System.out.println("   0 1 2 3 4 5 6 \n a - - - - - - - \n b - - - - - - - \n c - - - - - - - \n d - - - - - - - \n e - - - - - - - \n f - - - - - - - \n g - - - - - - - ");
-            String userGuess = helper.getUserInput("Enter a guess");
+            //print out the gridBoard
+            grid();
+
             // Get User input
-            checkUserGuess(userGuess);
+            String userGuess = helper.getUserInput("\nEnter a guess");
+
             //Call our checkUserGuess method.
+            checkUserGuess(userGuess);
         }
         finishGame();
         //Call our finishGame method.
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void checkUserGuess(String userGuess){
         //increment the # of guesses the user made.
         numOfGuesses++;
         //Assume it's a miss unless told otherwise.
         String result = "Miss";
-
         //Repeat with all DotComs in the list.
         for(int x = 0; x < dotComsList.size(); x++)
         {
@@ -90,13 +114,13 @@ public class DotComBust
     private void finishGame()
     {
         //Print a Message telling the User how they did.
-        System.out.println("All of the Dot Com Ships are destroyed!");
+        System.out.println("All of the Dot Com websites have been taken down!");
         if(numOfGuesses <= 18){
             System.out.println("It only took you " + numOfGuesses + " guesses.");
         }
         else
         {
-            System.out.println("Took you Long enough. " + numOfGuesses + " guesses.");
+            System.out.println("Try for a shorter amount of guesses next time!" + numOfGuesses + " guesses.");
         }
 
     }

@@ -86,5 +86,38 @@ public class GameHelper
 
         return alphaCells;
     }
+    //This Prints the 7x7 Grid
+    public void gridBoard(){
+        //create a 7x7 grid array
+        char[][] board = new char[gridLength][gridLength];
+        //create water and set value to '~'
+        char x = '~';
+        //create y axis for user to see
+        char y = 'a';
+        System.out.println("\n  0 1 2 3 4 5 6");
+        //create outer loop for the row
+        for(int row = 0; row<board.length; row++){
+            //increment Letters a->g
+            System.out.print(y + " ");
+            y++;
+            //create inner loop for the col and print water
+            for(int col = 0; col<board[row].length; col++){
+                //position 0 0 set to water
+                board[row][col] = x;
+
+                //print x y coordinates and add a space
+                System.out.print(board[row][col] + " ");
+            }
+            //print a new line for each new row
+            System.out.println();
+
+        }
+    }
+
+
 }
+
+
+
+
 
