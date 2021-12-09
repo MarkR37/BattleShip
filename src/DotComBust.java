@@ -43,27 +43,68 @@ public class DotComBust
 
 
     }
-    private void grid(){
+    //This Prints the 7x7 Grid
+    public void updateBoard(String userGuess){
+        //create a 7x7 grid array
+        char[][] board = new char[7][7];
+        //create water and set value to '~'
+        char x = '~';
+        //create y axis for user to see
+        char y = 'a';
 
-        helper.gridBoard();
+        System.out.println("\n  0 1 2 3 4 5 6");
+        //create outer loop for the row
+        for(int row = 0; row<board.length; row++){
+            //increment Letters a->g
+            System.out.print(y + " ");
+            y++;
+            //create inner loop for the col and print water
+            for(int col = 0; col<board[row].length; col++){
+                //position 0 0 set to water
+                board[row][col] = x;
+                //print x y coordinates and add a space
+                System.out.print(board[row][col] + " ");
+            }
+            //print a new line for each new row
+            System.out.println();
 
+        }
+        //Somehow use checkUserGuess(userGuess) to see if its a hit or a miss
+        //Then Somehow change the 2 characters they type into the row and col
+        //if(userGuess == "miss"){
+        //    board[][] = 0;
+        //}
+        //if(userGuess == "hit"){
+        //    board[][] = X;
+        //}
+        //if(userGuess == "kill"){
+        //    board[][] = X;
+        //}
     }
 
     private void startPlaying()
     {
+        int x = 0;
 
 
 
         while(!dotComsList.isEmpty())
         {
             //print out the gridBoard
-            grid();
 
+            if(x == 0)
+            {
+                //Prints the Board Once
+                helper.printBoard();
+                x++;
+            }
             // Get User input
             String userGuess = helper.getUserInput("\nEnter a guess");
 
             //Call our checkUserGuess method.
             checkUserGuess(userGuess);
+            //Updates the Board based on the user's guess, if it hits - it's an X, if it misses - it's a 0.
+            updateBoard(userGuess);
         }
         finishGame();
         //Call our finishGame method.
@@ -91,7 +132,7 @@ public class DotComBust
         //Repeat with all DotComs in the list.
         for(int x = 0; x < dotComsList.size(); x++)
         {
-            //Ask the DotCom to chek the User's Guess, we are looking for a hit or a kill.
+            //Ask the DotCom to check the User's Guess, we are looking for a hit or a kill.
             result = dotComsList.get(x).checkYourself(userGuess);
 
             if(result.equals("hit"))
