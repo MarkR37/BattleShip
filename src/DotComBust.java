@@ -66,11 +66,10 @@ public class DotComBust {
             ArrayList<String> newLocation = helper.placeDotCom(3);
             //Ask the helper for a DotCom Location (Array List of Strings)
             dotComToSet.setLocationCells(newLocation);
-            System.out.println(newLocation);
             //Calls the Setter method on the DotCom to give the location you got from the Helper.
         }
     }
-    
+
     public void updateBoard(String userGuess, String result) {
         if(userGuess.length() > 2) return;
         int x = userGuess.charAt(0) - 'a'; //returns 'a' from a1
