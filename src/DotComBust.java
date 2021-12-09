@@ -1,12 +1,40 @@
 import java.util.*;
-public class DotComBust
-{
+
+public class DotComBust {
+    public static final char WATER = '~';
     private GameHelper helper = new GameHelper();
     private ArrayList<DotCom> dotComsList = new ArrayList<DotCom>();
     private int numOfGuesses = 0;
+    private char[][] board = new char[7][7];
 
-    private void setUpGame()
-    {
+    public void initBoard() {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
+                board[row][col] = WATER;
+            }
+        }
+    }
+
+    public void printBoard() {
+        //create y axis for user to see
+        char y = 'a';
+        System.out.println("\n  0 1 2 3 4 5 6");
+        //create outer loop for the row
+        for (int row = 0; row < board.length; row++) {
+            //increment Letters a->g
+            System.out.print(y + " ");
+            y++;
+            //create inner loop for the col and print water
+            for (int col = 0; col < board[row].length; col++) {
+                //print x y coordinates and add a space
+                System.out.print(board[row][col] + " ");
+            }
+            //print a new line for each new row
+            System.out.println();
+        }
+    }
+
+    private void setUpGame() {
         //Make Dot coms and set Locations
         DotCom one = new DotCom();
         one.setName("Pets.com");
@@ -30,117 +58,61 @@ public class DotComBust
         System.out.println("Each DotCom has 3 spaces");
         System.out.println("Example: User Type a0 or b4 or g7 ");
         System.out.println("It will be a Hit or Miss. Good Luck!!!");
-
+        initBoard();
+        printBoard();
 
         //Repeat with Each DotCom in the list
-        for(DotCom dotComToSet : dotComsList)
-        {
+        for (DotCom dotComToSet : dotComsList) {
             ArrayList<String> newLocation = helper.placeDotCom(3);
             //Ask the helper for a DotCom Location (Array List of Strings)
             dotComToSet.setLocationCells(newLocation);
+            System.out.println(newLocation);
             //Calls the Setter method on the DotCom to give the location you got from the Helper.
         }
-
-
     }
-    //This Prints the 7x7 Grid
-    public void updateBoard(String userGuess){
-        //create a 7x7 grid array
-        char[][] board = new char[7][7];
-        //create water and set value to '~'
-        char x = '~';
-        //create y axis for user to see
-        char y = 'a';
-
-        System.out.println("\n  0 1 2 3 4 5 6");
-        //create outer loop for the row
-        for(int row = 0; row<board.length; row++){
-            //increment Letters a->g
-            System.out.print(y + " ");
-            y++;
-            //create inner loop for the col and print water
-            for(int col = 0; col<board[row].length; col++){
-                //position 0 0 set to water
-                board[row][col] = x;
-                //print x y coordinates and add a space
-                System.out.print(board[row][col] + " ");
-            }
-            //print a new line for each new row
-            System.out.println();
-
+    
+    public void updateBoard(String userGuess, String result) {
+        if(userGuess.length() > 2) return;
+        int x = userGuess.charAt(0) - 'a'; //returns 'a' from a1
+        int y = userGuess.charAt(1) - '0'; // returns '1' from a1
+        if (result.equals("hit")) {
+            board[x][y] = 'X';
+        } else if (result.equals("kill")) {
+            board[x][y] = 'X';
+        } else if (result.equals("miss")) {
+            board[x][y] = '0';
         }
-        //Somehow use checkUserGuess(userGuess) to see if its a hit or a miss
-        //Then Somehow change the 2 characters they type into the row and col
-        //if(userGuess == "miss"){
-        //    board[][] = 0;
-        //}
-        //if(userGuess == "hit"){
-        //    board[][] = X;
-        //}
-        //if(userGuess == "kill"){
-        //    board[][] = X;
-        //}
     }
 
-    private void startPlaying()
-    {
-        int x = 0;
-
-
-
-        while(!dotComsList.isEmpty())
-        {
-            //print out the gridBoard
-
-            if(x == 0)
-            {
-                //Prints the Board Once
-                helper.printBoard();
-                x++;
-            }
+    private void startPlaying() {
+        while (!dotComsList.isEmpty()) {
             // Get User input
             String userGuess = helper.getUserInput("\nEnter a guess");
-
             //Call our checkUserGuess method.
-            checkUserGuess(userGuess);
+            String result = checkUserGuess(userGuess);
             //Updates the Board based on the user's guess, if it hits - it's an X, if it misses - it's a 0.
-            updateBoard(userGuess);
+            updateBoard(userGuess, result);
+            printBoard();
         }
         finishGame();
         //Call our finishGame method.
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private void checkUserGuess(String userGuess){
+    private String checkUserGuess(String userGuess) {
         //increment the # of guesses the user made.
         numOfGuesses++;
         //Assume it's a miss unless told otherwise.
-        String result = "Miss";
+        String result = "miss";
         //Repeat with all DotComs in the list.
-        for(int x = 0; x < dotComsList.size(); x++)
-        {
+        for (int x = 0; x < dotComsList.size(); x++) {
             //Ask the DotCom to check the User's Guess, we are looking for a hit or a kill.
             result = dotComsList.get(x).checkYourself(userGuess);
 
-            if(result.equals("hit"))
-            {
+            if (result.equals("hit")) {
                 break;
             }
-            if(result.equals("kill"))
-            {
+            if (result.equals("kill")) {
                 //Make Sure to Remove the DotCom since it was destroyed.
                 dotComsList.remove(x);
                 break;
@@ -149,24 +121,22 @@ public class DotComBust
         }
         //Print the Result to the User.
         System.out.println(result);
+        return result;
 
     }
 
-    private void finishGame()
-    {
+    private void finishGame() {
         //Print a Message telling the User how they did.
         System.out.println("All of the Dot Com websites have been taken down!");
-        if(numOfGuesses <= 18){
+        if (numOfGuesses <= 18) {
             System.out.println("It only took you " + numOfGuesses + " guesses.");
-        }
-        else
-        {
+        } else {
             System.out.println("Try for a shorter amount of guesses next time!" + numOfGuesses + " guesses.");
         }
 
     }
 
-    public static void main (String[] args){
+    public static void main(String[] args) {
         DotComBust game = new DotComBust();
         game.setUpGame();
         game.startPlaying();
